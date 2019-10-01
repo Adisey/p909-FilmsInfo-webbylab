@@ -8,4 +8,4 @@ const formatsSchema = new Schema({
     },
 })
 
-module.exports = mongoose.model('format', formatsSchema)
+module.exports = mongoose.model('formats', formatsSchema)

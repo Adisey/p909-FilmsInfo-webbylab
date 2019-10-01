@@ -1,21 +1,27 @@
 const express = require('express')
 const router = express.Router()
-const Stars = require(`../models/stars`)
+const Films = require(`../models/films`)
+
+// ToDo: Добавить PATCH
 
 router.get(`/`, async (req, res) => {
-    const stars = await Stars.find({})
-    res.status(200).json(stars)
+    // ToDO: Добавить Пагинацию
+    const films = await Films.find({})
+    res.status(200).json(films)
 })
 
 router.post(`/`, async (req, res) => {
     // ToDo: Обыграть проверку на дублирование
     try {
-        const starsData = {
-            fullName: req.body.fullName,
+        const filmsData = {
+            title: req.body.title,
+            releaseYear: req.body.releaseYear,
+            format: req.body.format,
+            stars: req.body.stars ? req.body.stars : '',
         }
-        const stars = new Stars(starsData)
-        await stars.save()
-        res.status(201).json(stars)
+        const films = new Films(filmsData)
+        await films.save()
+        res.status(201).json(films)
     } catch (error) {
         res.status(400).json({
             message: 'Bad Request',
@@ -26,7 +32,7 @@ router.post(`/`, async (req, res) => {
 
 router.delete(`/:id`, async (req, res) => {
     try {
-        const resDB = await Stars.deleteOne({ _id: req.params.id })
+        const resDB = await Films.deleteOne({ _id: req.params.id })
         const message = resDB.deletedCount
             ? `record with id ${req.params.id} is delete`
             : `record with id ${req.params.id} is not Found`
