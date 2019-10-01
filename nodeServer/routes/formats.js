@@ -1,22 +1,21 @@
 const express = require('express')
 const router = express.Router()
-const Stars = require(`../models/stars`)
+const Formats = require(`../models/formats`)
 
 router.get(`/`, async (req, res) => {
-    // ToDO: Добавить Пагинацию
-    const stars = await Stars.find({})
-    res.status(200).json(stars)
+    const formats = await Formats.find({})
+    res.status(200).json(formats)
 })
 
 router.post(`/`, async (req, res) => {
     // ToDo: Обыграть проверку на дублирование
     try {
-        const starsData = {
-            fullName: req.body.fullName,
+        const formatsData = {
+            name: req.body.name,
         }
-        const stars = new Stars(starsData)
-        await stars.save()
-        res.status(201).json(stars)
+        const formats = new Formats(formatsData)
+        await formats.save()
+        res.status(201).json(formats)
     } catch (error) {
         res.status(400).json({
             message: 'Bad Request',
@@ -27,7 +26,7 @@ router.post(`/`, async (req, res) => {
 
 router.delete(`/:id`, async (req, res) => {
     try {
-        const resDB = await Stars.deleteOne({ _id: req.params.id })
+        const resDB = await Formats.deleteOne({ _id: req.params.id })
         const message = resDB.deletedCount
             ? `record with id ${req.params.id} is delete`
             : `record with id ${req.params.id} is not Found`

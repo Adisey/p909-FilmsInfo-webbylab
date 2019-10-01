@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const bodyPaser = require('body-parser')
 const path = require('path')
 const starsRouter = require(`./routes/stars`)
+const formatsRouter = require(`./routes/formats`)
 const keys = require('./key')
 
 const host = '127.0.0.1'
@@ -17,6 +18,7 @@ mongoose
 const app = express()
 app.use(bodyPaser.json())
 app.use(`/api/stars`, starsRouter)
+app.use(`/api/formats`, formatsRouter)
 app.use(express.static(clientPath))
 
 app.listen(port, () => {
