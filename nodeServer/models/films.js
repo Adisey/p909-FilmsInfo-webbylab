@@ -3,8 +3,10 @@ const Schema = mongoose.Schema
 
 const filmsSchema = new Schema({
     title: {
-        type: String,
+        index: true,
         required: true,
+        type: String,
+        unique: true,
     },
     releaseYear: {
         type: String,

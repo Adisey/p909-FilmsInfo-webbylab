@@ -1,29 +1,29 @@
-const Stars = require(`../models/stars`)
+const Formats = require(`../models/formats`)
 
-module.exports = starsMongoDB = {
+module.exports = formatsMongoDB = {
     async getAll() {
         const response = {
             status: 500,
             message: 'Internal Server Error',
         }
         try {
-            const stars = await Stars.find({})
+            const formats = await Formats.find({})
             response.status = 200
             response.message = 'Ok'
-            response.data = stars
+            response.data = formats
         } catch (error) {
             response.status = 400
             response.message = 'Bad Request'
         }
         return response
     },
-    async deleteStar(id) {
+    async deleteFormat(id) {
         const response = {
             status: 412,
             message: 'Precondition Failed',
         }
         try {
-            const resDB = await Stars.deleteOne({ _id: id })
+            const resDB = await Formats.deleteOne({ _id: id })
             response.status = 200
             response.message = resDB.deletedCount
                 ? `record with id ${id} is delete`
@@ -34,31 +34,31 @@ module.exports = starsMongoDB = {
         }
         return response
     },
-    async add(fullName) {
+    async add(name) {
         const response = {
             status: 412,
             message: 'Precondition Failed',
         }
-        const starData = {
-            fullName: fullName,
+        const formatData = {
+            name: name,
         }
-        const star = new Stars(starData)
+        const format = new Formats(formatData)
         try {
-            await star.save()
+            await format.save()
             response.status = 201
             response.message = 'Ok'
-            response.data = star
+            response.data = format
         } catch (error) {
             if (error.code === 11000) {
-                await Stars.findOne({ fullName: fullName }, function(findError, star) {
-                    if (findError || !star) {
+                await Formats.findOne({ name: name }, function(findError, format) {
+                    if (findError || !format) {
                         response.status = 400
-                        response.message = 'Duplicate fullName'
+                        response.message = 'Duplicate name'
                         response.data = findError
                     } else {
                         response.status = 201
-                        response.message = 'Duplicate FullName'
-                        response.data = star
+                        response.message = 'Duplicate name'
+                        response.data = format
                     }
                 })
             } else {

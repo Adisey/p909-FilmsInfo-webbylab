@@ -1,29 +1,29 @@
-const Stars = require(`../models/stars`)
+const Films = require(`../models/films`)
 
-module.exports = starsMongoDB = {
+module.exports = filmsMongoDB = {
     async getAll() {
         const response = {
             status: 500,
             message: 'Internal Server Error',
         }
         try {
-            const stars = await Stars.find({})
+            const films = await Films.find({})
             response.status = 200
             response.message = 'Ok'
-            response.data = stars
+            response.data = films
         } catch (error) {
             response.status = 400
             response.message = 'Bad Request'
         }
         return response
     },
-    async deleteStar(id) {
+    async deleteFilm(id) {
         const response = {
             status: 412,
             message: 'Precondition Failed',
         }
         try {
-            const resDB = await Stars.deleteOne({ _id: id })
+            const resDB = await Films.deleteOne({ _id: id })
             response.status = 200
             response.message = resDB.deletedCount
                 ? `record with id ${id} is delete`
@@ -34,31 +34,35 @@ module.exports = starsMongoDB = {
         }
         return response
     },
-    async add(fullName) {
+    async add(newFilm) {
         const response = {
             status: 412,
             message: 'Precondition Failed',
         }
-        const starData = {
-            fullName: fullName,
+        const filmData = {
+            title: newFilm.title,
+            releaseYear: newFilm.releaseYear,
+            format: newFilm.format,
+            stars: newFilm.stars,
         }
-        const star = new Stars(starData)
+        const film = new Films(filmData)
         try {
-            await star.save()
+            await film.save()
             response.status = 201
             response.message = 'Ok'
-            response.data = star
+            response.data = film
         } catch (error) {
             if (error.code === 11000) {
-                await Stars.findOne({ fullName: fullName }, function(findError, star) {
-                    if (findError || !star) {
+                await Films.findOne({ title: newFilm.title }, function(findError, film) {
+                    if (findError || !film) {
                         response.status = 400
-                        response.message = 'Duplicate fullName'
+                        response.message = 'Duplicate name'
                         response.data = findError
                     } else {
+                        // ToDo: Нужно проапдейтить фильм
                         response.status = 201
-                        response.message = 'Duplicate FullName'
-                        response.data = star
+                        response.message = 'Duplicate name'
+                        response.data = film
                     }
                 })
             } else {
@@ -67,6 +71,7 @@ module.exports = starsMongoDB = {
                 response.data = error.errmsg
             }
         }
+        // ToDo: В фоне добавить артистов и форматы
         return response
     },
 }

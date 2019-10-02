@@ -12,7 +12,11 @@ const port = process.env.PORT || 5000 // проверяем системный �
 const clientPath = path.join(__dirname, 'client')
 
 mongoose
-    .connect(keys.mongoURI)
+    .connect(keys.mongoURI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+    })
     .then(() => console.log(`Was connected to MongoDB`))
     .catch(err => console.error(err))
 

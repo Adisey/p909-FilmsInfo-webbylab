@@ -1,42 +1,38 @@
 const express = require('express')
 const router = express.Router()
-const Formats = require(`../models/formats`)
+const FormatsMongoDB = require(`../middleware/formats`)
 
 router.get(`/`, async (req, res) => {
-    const formats = await Formats.find({})
-    res.status(200).json(formats)
+    const resDB = await FormatsMongoDB.getAll()
+    res.status(resDB.status).json({
+        message: resDB.message,
+        data: resDB.data,
+    })
 })
 
 router.post(`/`, async (req, res) => {
-    // ToDo: Обыграть проверку на дублирование
-    try {
-        const formatsData = {
-            name: req.body.name,
-        }
-        const formats = new Formats(formatsData)
-        await formats.save()
-        res.status(201).json(formats)
-    } catch (error) {
-        res.status(400).json({
-            message: 'Bad Request',
-            error: error,
+    if (req && req.body && req.body.name) {
+        const response = await FormatsMongoDB.add(req.body.name)
+        res.status(response.status).json({
+            message: response.message,
+            data: response.data,
+        })
+    } else {
+        res.status(412).json({
+            message: 'Precondition Failed',
         })
     }
 })
 
 router.delete(`/:id`, async (req, res) => {
-    try {
-        const resDB = await Formats.deleteOne({ _id: req.params.id })
-        const message = resDB.deletedCount
-            ? `record with id ${req.params.id} is delete`
-            : `record with id ${req.params.id} is not Found`
-        res.status(200).json({
-            message: message,
+    if (req && req.params && req.params.id) {
+        const resDB = await FormatsMongoDB.deleteFormat(req.params.id)
+        res.status(resDB.status).json({
+            message: resDB.message,
         })
-    } catch (error) {
+    } else {
         res.status(400).json({
             message: 'Bad Request',
-            error: error,
         })
     }
 })

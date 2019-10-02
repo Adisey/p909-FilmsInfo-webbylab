@@ -1,48 +1,41 @@
 const express = require('express')
 const router = express.Router()
-const Films = require(`../models/films`)
+const FilmsMongoDB = require(`../middleware/films`)
 
 // ToDo: Добавить PATCH
 
 router.get(`/`, async (req, res) => {
-    // ToDO: Добавить Пагинацию
-    const films = await Films.find({})
-    res.status(200).json(films)
+    // ToDO: Возможно добавить Пагинацию
+    const resDB = await FilmsMongoDB.getAll()
+    res.status(resDB.status).json({
+        message: resDB.message,
+        data: resDB.data,
+    })
 })
 
 router.post(`/`, async (req, res) => {
-    // ToDo: Обыграть проверку на дублирование
-    try {
-        const filmsData = {
-            title: req.body.title,
-            releaseYear: req.body.releaseYear,
-            format: req.body.format,
-            stars: req.body.stars ? req.body.stars : '',
-        }
-        const films = new Films(filmsData)
-        await films.save()
-        res.status(201).json(films)
-    } catch (error) {
-        res.status(400).json({
-            message: 'Bad Request',
-            error: error,
+    if (req && req.body) {
+        const response = await FilmsMongoDB.add(req.body)
+        res.status(response.status).json({
+            message: response.message,
+            data: response.data,
+        })
+    } else {
+        res.status(412).json({
+            message: 'Precondition Failed',
         })
     }
 })
 
 router.delete(`/:id`, async (req, res) => {
-    try {
-        const resDB = await Films.deleteOne({ _id: req.params.id })
-        const message = resDB.deletedCount
-            ? `record with id ${req.params.id} is delete`
-            : `record with id ${req.params.id} is not Found`
-        res.status(200).json({
-            message: message,
+    if (req && req.params && req.params.id) {
+        const resDB = await FilmsMongoDB.deleteFilm(req.params.id)
+        res.status(resDB.status).json({
+            message: resDB.message,
         })
-    } catch (error) {
+    } else {
         res.status(400).json({
             message: 'Bad Request',
-            error: error,
         })
     }
 })
