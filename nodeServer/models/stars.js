@@ -5,6 +5,7 @@ const starsSchema = new Schema({
     fullName: {
         type: String,
         required: true,
+        unique: true,
     },
 })
 

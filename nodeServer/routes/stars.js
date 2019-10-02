@@ -1,42 +1,38 @@
 const express = require('express')
 const router = express.Router()
-const Stars = require(`../models/stars`)
+const StarsMongoDB = require(`../middleware/stars`)
 
 router.get(`/`, async (req, res) => {
-    const stars = await Stars.find({})
-    res.status(200).json(stars)
+    const resDB = await StarsMongoDB.getAll()
+    res.status(resDB.status).json({
+        message: resDB.message,
+        data: resDB.data,
+    })
 })
 
 router.post(`/`, async (req, res) => {
-    // ToDo: Обыграть проверку на дублирование
-    try {
-        const starsData = {
-            fullName: req.body.fullName,
-        }
-        const stars = new Stars(starsData)
-        await stars.save()
-        res.status(201).json(stars)
-    } catch (error) {
-        res.status(400).json({
-            message: 'Bad Request',
-            error: error,
+    if (req && req.body && req.body.fullName) {
+        const response = await StarsMongoDB.add(req.body.fullName)
+        res.status(response.status).json({
+            message: response.message,
+            data: response.data,
+        })
+    } else {
+        res.status(412).json({
+            message: 'Precondition Failed',
         })
     }
 })
 
 router.delete(`/:id`, async (req, res) => {
-    try {
-        const resDB = await Stars.deleteOne({ _id: req.params.id })
-        const message = resDB.deletedCount
-            ? `record with id ${req.params.id} is delete`
-            : `record with id ${req.params.id} is not Found`
-        res.status(200).json({
-            message: message,
+    if (req && req.params && req.params.id) {
+        const resDB = await StarsMongoDB.deleteStar(req.params.id)
+        res.status(resDB.status).json({
+            message: resDB.message,
         })
-    } catch (error) {
+    } else {
         res.status(400).json({
             message: 'Bad Request',
-            error: error,
         })
     }
 })
