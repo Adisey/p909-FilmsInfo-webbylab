@@ -34,7 +34,7 @@ module.exports = formatsMongoDB = {
         }
         return response
     },
-    async add(name) {
+    async load(name) {
         const response = {
             status: 412,
             message: 'Precondition Failed',
@@ -66,6 +66,27 @@ module.exports = formatsMongoDB = {
                 response.message = 'Bad Request'
                 response.data = error.errmsg
             }
+        }
+        return response
+    },
+    async add(name) {
+        const response = {
+            status: 412,
+            message: 'Precondition Failed',
+        }
+        const formatData = {
+            name: name,
+        }
+        const format = new Formats(formatData)
+        try {
+            await format.save()
+            response.status = 201
+            response.message = 'Ok'
+            response.data = format
+        } catch (error) {
+            response.status = 400
+            response.message = 'Duplicate name'
+            response.data = findError
         }
         return response
     },

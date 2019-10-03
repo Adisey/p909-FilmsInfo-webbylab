@@ -34,7 +34,8 @@ module.exports = starsMongoDB = {
         }
         return response
     },
-    async add(fullName) {
+    async load(fullName) {
+        console.log(fullName, `<-- load Stars------------ fullName`)
         const response = {
             status: 412,
             message: 'Precondition Failed',
@@ -66,6 +67,28 @@ module.exports = starsMongoDB = {
                 response.message = 'Bad Request'
                 response.data = error.errmsg
             }
+        }
+        console.log(response, `<-- load Stars------------ response`)
+        return response
+    },
+    async add(fullName) {
+        const response = {
+            status: 412,
+            message: 'Precondition Failed',
+        }
+        const starData = {
+            fullName: fullName,
+        }
+        const star = new Stars(starData)
+        try {
+            await star.save()
+            response.status = 201
+            response.message = 'Ok'
+            response.data = star
+        } catch (error) {
+            response.status = 400
+            response.message = 'Duplicate fullName'
+            response.data = findError
         }
         return response
     },

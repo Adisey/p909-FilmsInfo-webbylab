@@ -15,7 +15,9 @@ router.get(`/`, async (req, res) => {
 
 router.post(`/`, async (req, res) => {
     if (req && req.body) {
-        const response = await FilmsMongoDB.add(req.body)
+        // const response = await FilmsMongoDB.add(req.body)
+        // ToDo: Временно, для теста
+        const response = await FilmsMongoDB.load(req.body)
         res.status(response.status).json({
             message: response.message,
             data: response.data,

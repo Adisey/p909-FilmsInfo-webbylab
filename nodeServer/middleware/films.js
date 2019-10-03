@@ -1,4 +1,6 @@
 const Films = require(`../models/films`)
+const starsMongoDB = require(`../middleware/stars`)
+const formatsMongoDB = require(`../middleware/formats`)
 
 module.exports = filmsMongoDB = {
     async getAll() {
@@ -52,19 +54,33 @@ module.exports = filmsMongoDB = {
             response.message = 'Ok'
             response.data = film
         } catch (error) {
+            response.status = 400
+            response.message = 'Duplicate name'
+            response.data = findError
+        }
+        return response
+    },
+    async load(newFilm) {
+        let response = {
+            status: 412,
+            message: 'Precondition Failed',
+        }
+        const filmData = {
+            title: newFilm.title,
+            releaseYear: newFilm.releaseYear,
+            format: newFilm.format,
+            stars: newFilm.stars,
+        }
+        const film = new Films(filmData)
+        try {
+            await film.save()
+            response.status = 201
+            response.message = 'Ok'
+            response.data = film
+        } catch (error) {
             if (error.code === 11000) {
-                await Films.findOne({ title: newFilm.title }, function(findError, film) {
-                    if (findError || !film) {
-                        response.status = 400
-                        response.message = 'Duplicate name'
-                        response.data = findError
-                    } else {
-                        // ToDo: Нужно проапдейтить фильм
-                        response.status = 201
-                        response.message = 'Duplicate name'
-                        response.data = film
-                    }
-                })
+                const myResponse = await updateFilmByTitle(newFilm)
+                response = Object.assign({}, myResponse)
             } else {
                 response.status = 400
                 response.message = 'Bad Request'
@@ -72,6 +88,34 @@ module.exports = filmsMongoDB = {
             }
         }
         // ToDo: В фоне добавить артистов и форматы
+        if (response.status === 201) {
+            if (newFilm.format) {
+                formatsMongoDB.load(newFilm.format)
+            }
+            const newStar = response.data.stars.split(',')
+            newStar.forEach(star => {
+                starsMongoDB.load(star.trim())
+            })
+        }
         return response
     },
+}
+
+async function updateFilmByTitle(newFilm) {
+    const response = {}
+    response.status = 400
+    response.message = 'Error Updating Films'
+    try {
+        const updatedFilm = await Films.findOneAndUpdate(
+            { title: newFilm.title },
+            { $set: newFilm },
+            { new: true }
+        )
+        response.status = 201
+        response.message = 'Duplicate name'
+        response.data = updatedFilm
+    } catch (error) {
+        response.data = error
+    }
+    return response
 }
