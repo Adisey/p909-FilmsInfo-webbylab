@@ -87,7 +87,7 @@ module.exports = filmsMongoDB = {
                 response.data = error.errmsg
             }
         }
-        // ToDo: В фоне добавить артистов и форматы
+        // Node: В фоне добавим артистов и форматы
         if (response.status === 201) {
             if (newFilm.format) {
                 formatsMongoDB.load(newFilm.format)

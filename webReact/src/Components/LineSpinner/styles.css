@@ -1,0 +1,31 @@
+.spinner {
+  position: fixed;
+  z-index: 5;
+  top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.line {
+  height: 5px;
+  border-radius: 0 10px 10px 0;
+  background: linear-gradient(to right, rgba(0, 0, 255, 1) 0%, rgba(50, 50, 255, 1) 25%, rgba(0, 200, 200, 1) 50%, rgba(100, 255, 100, 1) 75%, rgba(0, 255, 0, 1) 100%);
+  animation: lineAnime 3s infinite ease-out;
+}
+
+@keyframes lineAnime {
+  from {
+    background-position: -2000px;
+  }
+
+  to {
+    background-position: 0;
+  }
+}
+
+
