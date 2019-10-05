@@ -1,5 +1,5 @@
 import Catcher from './Catcher'
-import Test1 from './Test1'
+import ToolBar from './ToolBar'
 import LineSpinner from './LineSpinner'
 
-export { LineSpinner, Catcher, Test1 }
+export { LineSpinner, Catcher, ToolBar }

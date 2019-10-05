@@ -1,15 +1,14 @@
 import React from 'react'
 import Styles from './styles.less'
-import { Catcher, Test1, LineSpinner } from '../Components'
+import { Catcher, ToolBar, LineSpinner } from '../Components'
 
 function MainPage() {
     return (
         <Catcher>
-            <div className={Styles.main}>
-                START
-                <Test1 />
-            </div>
             <LineSpinner />
+            <div className={Styles.main}>
+                <ToolBar />
+            </div>
         </Catcher>
     )
 }
