@@ -3,7 +3,7 @@ import { applyMiddleware, compose } from 'redux'
 import { createBrowserHistory } from 'history'
 
 // Middleware
-import { routerMiddleware as craateRouterMiddleware } from 'react-router-redux'
+import { routerMiddleware as createRouterMiddleware } from 'react-router-redux'
 import { createLogger } from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 
@@ -22,7 +22,7 @@ const logger = createLogger({
 })
 
 const history = createBrowserHistory()
-const routerMiddleware = craateRouterMiddleware(history)
+const routerMiddleware = createRouterMiddleware(history)
 const sagaMiddleware = createSagaMiddleware()
 const devtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 const composeEnhancers = __DEV__ && devtools ? devtools : compose
