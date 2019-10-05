@@ -59,7 +59,7 @@ export default connect(
             return (
                 <div className={Styles.main}>
                     <div className={Styles.buttonPlace} title="Add new film">
-                        <Button type="primary" shape="circle" icon="plus" />
+                        <Button type="primary" shape="circle" icon="plus" loading={isSpinning} />
                     </div>
 
                     <div className={Styles.searchPlace3}>
@@ -104,7 +104,7 @@ export default connect(
                             value={listViewMode}
                             buttonStyle="solid"
                         >
-                            <Radio.Button value="appstore" icon="appstore">
+                            <Radio.Button value="card">
                                 <Icon type="appstore" />
                             </Radio.Button>
                             <Radio.Button value="table">

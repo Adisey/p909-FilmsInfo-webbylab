@@ -4,7 +4,7 @@ import { fromJS } from 'immutable'
 import { type } from './types'
 
 const initialState = fromJS({
-    isSpinning: 0,
+    isSpinning: false,
     spinners: [],
     listViewMode: 'appstore',
     listSortOrder: void 0,
@@ -19,14 +19,14 @@ export const uiReducer = (state = initialState, action) => {
                 _spinners.push(action.payload)
             )
 
-            return _addSpinner.set('isSpinning', _addSpinner.get('spinners').size)
+            return _addSpinner.set('isSpinning', !!_addSpinner.get('spinners').size)
         }
         case type.REMOVE_SPINNER: {
             const _removeSpinner = state.update('spinners', (_spinners) => {
                 return _spinners.filter((sp) => sp !== action.payload)
             })
 
-            return _removeSpinner.set('isSpinning', _removeSpinner.get('spinners').size)
+            return _removeSpinner.set('isSpinning', !!_removeSpinner.get('spinners').size)
         }
         case type.SET_LIST_VIEW_MODE: {
             return state.set('listViewMode', action.payload)
