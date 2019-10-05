@@ -1,14 +1,19 @@
 import React from 'react'
+import { LightSearchText } from '../'
 // Styles
 import cx from 'classnames'
 import Styles from './styles.less'
 
 export default function FilmCards(props) {
-    const { films } = props
-    const filmsJSX = films.map((f) => {
+    const { films, listFilterTitle, listFilterStar } = props
+    const filmsJSX = films.map((film) => {
         return (
-            <div key={f._id} className={Styles.card}>
-                <FilmCard film={f} />
+            <div key={film._id} className={Styles.card}>
+                <FilmCard
+                    film={film}
+                    listFilterTitle={listFilterTitle}
+                    listFilterStar={listFilterStar}
+                />
             </div>
         )
     })
@@ -16,17 +21,19 @@ export default function FilmCards(props) {
 }
 
 function FilmCard(props) {
-    const { film } = props
+    const { film, listFilterTitle, listFilterStar } = props
+    const lightTitle = <LightSearchText text={film.title} searchText={listFilterTitle} />
+    const lightStars = <LightSearchText text={film.stars} searchText={listFilterStar} />
     return (
         <>
-            <div className={cx(Styles.titleFilms)}>{film.title}</div>
+            <div className={cx(Styles.titleFilms)}>{lightTitle}</div>
             <div className={cx(Styles.format, Styles.field)}>
                 <div className={Styles.title}>Format:</div>
                 <div className={Styles.content}>{film.format}</div>
             </div>
             <div className={cx(Styles.stars, Styles.field)}>
                 <div className={Styles.title}>Stars:</div>
-                <div className={Styles.content}>{film.stars}</div>
+                <div className={Styles.content}>{lightStars}</div>
             </div>
         </>
     )

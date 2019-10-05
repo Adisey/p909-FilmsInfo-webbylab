@@ -23,6 +23,8 @@ const mapStateToProps = (state) => {
         isSpinning: state.ui.get('isSpinning'),
         listViewMode: state.ui.get('listViewMode'),
         listSortOrder: state.ui.get('listSortOrder'),
+        listFilterTitle: state.ui.get('listFilterTitle'),
+        listFilterStar: state.ui.get('listFilterStar'),
         films: state.films,
     }
 }
@@ -39,15 +41,25 @@ export default connect(
             this.props.actions.fetchFilmsAsync()
         }
         render() {
-            const { isSpinning, films, listSortOrder } = this.props
+            const { isSpinning, films, listSortOrder, listFilterTitle, listFilterStar } = this.props
             let filmsJS = films.toJS()
+            if (listFilterTitle) {
+                filmsJS = filmsJS.filter((f) =>
+                    f.title.toUpperCase().includes(listFilterTitle.toUpperCase())
+                )
+            }
+            if (listFilterStar) {
+                filmsJS = filmsJS.filter((f) =>
+                    f.stars.toUpperCase().includes(listFilterStar.toUpperCase())
+                )
+            }
             if (listSortOrder) {
                 const sortTitle = (a, b) => {
                     const aT = listSortOrder === 'asc' ? a.title : b.title
                     const bT = listSortOrder === 'asc' ? b.title : a.title
                     return aT < bT ? -1 : 1
                 }
-                filmsJS.sort(sortTitle)
+                filmsJS = filmsJS.sort(sortTitle)
             }
             return (
                 <Catcher>
@@ -60,7 +72,11 @@ export default connect(
                             wrapperClassName={Styles.spinContainer}
                         >
                             <div className={Styles.listContainer}>
-                                <FilmCards films={filmsJS} />
+                                <FilmCards
+                                    films={filmsJS}
+                                    listFilterTitle={listFilterTitle}
+                                    listFilterStar={listFilterStar}
+                                />
                             </div>
                         </Spin>
                     </div>
