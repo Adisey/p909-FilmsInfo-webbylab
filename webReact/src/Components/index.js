@@ -5,5 +5,15 @@ import FilmsViewer from './FilmsViewer'
 import FilmCards from './FilmCards'
 import FilmTable from './FilmTable'
 import LightSearchText from './LightSearchText'
+import ListToolBar from './ListToolBar'
 
-export { LineSpinner, Catcher, ToolBar, FilmsViewer, FilmCards, LightSearchText, FilmTable }
+export {
+    LineSpinner,
+    Catcher,
+    ToolBar,
+    FilmsViewer,
+    FilmCards,
+    LightSearchText,
+    FilmTable,
+    ListToolBar,
+}

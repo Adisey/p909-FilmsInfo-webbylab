@@ -7,8 +7,8 @@ import { type } from '../types'
 // Workers
 import {
     fetchFilms,
+    removeFilm,
     // createFilm,
-    // removeFilm
 } from './workers'
 
 function* watcherFillFilms() {
@@ -17,13 +17,13 @@ function* watcherFillFilms() {
 // function* watcherCrateFilm() {
 //     yield takeEvery(type.CREATE_FILM_ASYNC, createFilm)
 // }
-// function* watcherRemoveFilm() {
-//     yield takeEvery(type.REMOVE_FILM_ASYNC, removeFilm)
-// }
+function* watcherRemoveFilm() {
+    yield takeEvery(type.REMOVE_FILM_ASYNC, removeFilm)
+}
 export function* watcherFilms() {
     yield all([
         call(watcherFillFilms),
+        call(watcherRemoveFilm),
         // call(watcherCrateFilm),
-        // call(watcherRemoveFilm)
     ])
 }

@@ -26,7 +26,7 @@ module.exports = filmsMongoDB = {
         }
         try {
             const resDB = await Films.deleteOne({ _id: id })
-            response.status = 200
+            response.status = 204
             response.message = resDB.deletedCount
                 ? `record with id ${id} is delete`
                 : `record with id ${id} is not Found`
@@ -93,7 +93,7 @@ module.exports = filmsMongoDB = {
                 formatsMongoDB.load(newFilm.format)
             }
             const newStar = response.data.stars.split(',')
-            newStar.forEach(star => {
+            newStar.forEach((star) => {
                 starsMongoDB.load(star.trim())
             })
         }
