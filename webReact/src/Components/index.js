@@ -9,6 +9,7 @@ import ListToolBar from './ListToolBar'
 import FilmInputTitle from './Forms/FilmInputTitle'
 import FilmInputYear from './Forms/FilmInputYear'
 import FilmInputStars from './Forms/FilmInputStars'
+import FilmInputFormat from './Forms/FilmInputFormat'
 
 export {
     LineSpinner,
@@ -22,4 +23,5 @@ export {
     FilmInputTitle,
     FilmInputYear,
     FilmInputStars,
+    FilmInputFormat,
 }

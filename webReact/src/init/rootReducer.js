@@ -5,12 +5,12 @@ import { routerReducer as router } from 'react-router-redux'
 import { uiReducer as ui } from '../bus/ui/reducer'
 import { filmsReducer as films } from '../bus/films/reducer'
 import { starsReducer as stars } from '../bus/stars/reducer'
-import { formatsReducer as format } from '../bus/formats/reducer'
+import { formatsReducer as formats } from '../bus/formats/reducer'
 
 export const rootReducer = combineReducers({
     router,
     ui,
     films,
     stars,
-    format,
+    formats,
 })

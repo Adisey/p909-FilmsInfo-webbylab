@@ -11,6 +11,7 @@ import {
     FilmInputTitle,
     FilmInputYear,
     FilmInputStars,
+    FilmInputFormat,
 } from '..'
 // Styles
 import cx from 'classnames'
@@ -89,14 +90,16 @@ export default connect(
         setNewStarsFilm = (id, stars) => {
             this.props.actions.setNewStarsFilm(id, stars)
         }
+        setNewFormatFilm = (id, stars) => {
+            this.props.actions.setNewFormatFilm(id, stars)
+        }
         render() {
-            console.log('==(this.props)=>', this.props)
+            console.log('FilmsTable==(this.props)=>', this.props)
             const { films, listFilterTitle, listFilterStar, isSpinning } = this.props
             const { windowSizeHeight } = this.state
             const data = films.map((film) => {
                 const {
                     _id,
-                    format,
                     isEditMode,
                     title,
                     newTitle,
@@ -104,6 +107,8 @@ export default connect(
                     newReleaseYear,
                     stars,
                     newStars,
+                    format,
+                    newFormat,
                 } = film
 
                 const lightTitle = <LightSearchText text={title} searchText={listFilterTitle} />
@@ -129,6 +134,9 @@ export default connect(
                 }
                 const _setNewStarsFilm = (value) => {
                     this.setNewStarsFilm(_id, value)
+                }
+                const _setNewFormatFilm = (value) => {
+                    this.setNewFormatFilm(_id, value)
                 }
                 const isValidChange = !!newTitle
                 const actions = (
@@ -156,8 +164,13 @@ export default connect(
                     ) : (
                         releaseYear
                     ),
-                    format: format,
-                    // stars: lightStars,
+                    // format: format,
+                    format: isEditMode ? (
+                        <FilmInputFormat value={newFormat} changeFunc={_setNewFormatFilm} />
+                    ) : (
+                        format
+                    ),
+                    //
                     stars: isEditMode ? (
                         <FilmInputStars value={newStars} changeFunc={_setNewStarsFilm} />
                     ) : (
