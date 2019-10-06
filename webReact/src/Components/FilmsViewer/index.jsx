@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 // AntD
 import { Spin } from 'antd'
 // Components
-import { Catcher, FilmCards } from '../'
+import { Catcher, FilmCards, FilmTable } from '../'
 // Styles
 import Styles from './styles.less'
 // Actions
@@ -41,7 +41,14 @@ export default connect(
             this.props.actions.fetchFilmsAsync()
         }
         render() {
-            const { isSpinning, films, listSortOrder, listFilterTitle, listFilterStar } = this.props
+            const {
+                isSpinning,
+                films,
+                listSortOrder,
+                listFilterTitle,
+                listFilterStar,
+                listViewMode,
+            } = this.props
             let filmsJS = films.toJS()
             if (listFilterTitle) {
                 filmsJS = filmsJS.filter((f) =>
@@ -72,11 +79,19 @@ export default connect(
                             wrapperClassName={Styles.spinContainer}
                         >
                             <div className={Styles.listContainer}>
-                                <FilmCards
-                                    films={filmsJS}
-                                    listFilterTitle={listFilterTitle}
-                                    listFilterStar={listFilterStar}
-                                />
+                                {listViewMode === 'table' ? (
+                                    <FilmTable
+                                        films={filmsJS}
+                                        listFilterTitle={listFilterTitle}
+                                        listFilterStar={listFilterStar}
+                                    />
+                                ) : (
+                                    <FilmCards
+                                        films={filmsJS}
+                                        listFilterTitle={listFilterTitle}
+                                        listFilterStar={listFilterStar}
+                                    />
+                                )}
                             </div>
                         </Spin>
                     </div>

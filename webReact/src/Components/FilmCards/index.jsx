@@ -1,5 +1,5 @@
 import React from 'react'
-import { LightSearchText } from '../'
+import { LightSearchText, Catcher } from '../'
 // Styles
 import cx from 'classnames'
 import Styles from './styles.less'
@@ -25,7 +25,7 @@ function FilmCard(props) {
     const lightTitle = <LightSearchText text={film.title} searchText={listFilterTitle} />
     const lightStars = <LightSearchText text={film.stars} searchText={listFilterStar} />
     return (
-        <>
+        <Catcher>
             <div className={cx(Styles.titleFilms)}>{lightTitle}</div>
             <div className={cx(Styles.format, Styles.field)}>
                 <div className={Styles.title}>Format:</div>
@@ -35,6 +35,6 @@ function FilmCard(props) {
                 <div className={Styles.title}>Stars:</div>
                 <div className={Styles.content}>{lightStars}</div>
             </div>
-        </>
+        </Catcher>
     )
 }
