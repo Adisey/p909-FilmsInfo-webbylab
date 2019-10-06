@@ -4,12 +4,12 @@ import { array } from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 // components
-import { LightSearchText, Catcher, ListToolBar } from '..'
+import { LightSearchText, Catcher, ListToolBar, FilmInputTitle, FilmInputYear } from '..'
 // Styles
 import cx from 'classnames'
 import Styles from './styles.less'
 // Antd
-import { Table, Input } from 'antd'
+import { Table } from 'antd'
 
 // Actions
 import { filmsActions } from '../../bus/films/actions'
@@ -70,18 +70,30 @@ export default connect(
         setEditModeItem = (id) => {
             this.props.actions.setEditModeFilm(id)
         }
-        setViewModeItem = (id) => {
+        setViewModeFilm = (id) => {
             this.props.actions.setViewModeFilm(id)
         }
         setNewTitleFilm = (id, title) => {
             this.props.actions.setNewTitleFilm(id, title)
+        }
+        setNewYearFilm = (id, year) => {
+            this.props.actions.setNewYearFilm(id, year)
         }
         render() {
             console.log('==(this.props)=>', this.props)
             const { films, listFilterTitle, listFilterStar, isSpinning } = this.props
             const { windowSizeHeight } = this.state
             const data = films.map((film) => {
-                const { _id, format, releaseYear, isEditMode, title, newTitle, stars } = film
+                const {
+                    _id,
+                    format,
+                    isEditMode,
+                    title,
+                    newTitle,
+                    releaseYear,
+                    newReleaseYear,
+                    stars,
+                } = film
 
                 const lightTitle = <LightSearchText text={title} searchText={listFilterTitle} />
                 const lightStars = <LightSearchText text={stars} searchText={listFilterStar} />
@@ -96,40 +108,44 @@ export default connect(
                 }
                 const _saveChangeItem = () => {
                     console.log('==(_saveChangeItem)=>', 1111)
+                    // ToDo: Сделать сохранение
                 }
-                const _setNewTitleFilm = (e) => {
-                    const { value } = e.target
-                    console.log('==(title)=>', value)
+                const _setNewTitleFilm = (value) => {
                     this.setNewTitleFilm(_id, value)
                 }
-                const TitleInput = () => {
-                    return (
-                        <Input
-                            placeholder="Title"
-                            value={newTitle}
-                            onChange={_setNewTitleFilm}
-                            allowClear
-                            className={cx(newTitle ? Styles.validInput : Styles.invalidInput)}
-                        />
-                    )
+                const _setNewYearFilm = (value) => {
+                    this.setNewYearFilm(_id, value)
                 }
-
+                const isValidChange = !!newTitle
                 const actions = (
                     <ListToolBar
                         deleteItem={_deleteItem}
                         itemName={`"${title}" films`}
+                        itemNewName={`"${isEditMode && newTitle ? newTitle : title}" films`}
                         setEditMode={_setEditModeItem}
                         setViewMode={_setViewModeItem}
                         isEditMode={isEditMode}
-                        isValidChange={newTitle}
+                        isValidChange={isValidChange}
                         saveChangeItem={_saveChangeItem}
                     />
                 )
                 return {
                     key: _id,
-                    title: isEditMode ? <TitleInput /> : lightTitle,
+                    title: isEditMode ? (
+                        <FilmInputTitle value={newTitle} changeFunc={_setNewTitleFilm} />
+                    ) : (
+                        lightTitle
+                    ),
+                    // releaseYear: releaseYear,
+                    releaseYear: isEditMode ? (
+                        <FilmInputYear value={newReleaseYear} changeFunc={_setNewYearFilm} />
+                    ) : (
+                        releaseYear
+                    ),
+
+                    // FilmInputYear
+
                     format: format,
-                    releaseYear: releaseYear,
                     stars: lightStars,
                     actions: actions,
                 }

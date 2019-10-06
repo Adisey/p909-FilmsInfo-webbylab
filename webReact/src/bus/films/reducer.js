@@ -44,8 +44,33 @@ export const filmsReducer = (state = initialState, action) => {
                     return film.set('newTitle', title)
                 }
             })
-
-        // format, releaseYear, isEditMode, title, stars
+        case type.SET_NEW_YEAR_FILM:
+            return state.map((film) => {
+                const { id, year } = action.payload
+                if (film.get('_id') !== id) {
+                    return film
+                } else {
+                    return film.set('newReleaseYear', year)
+                }
+            })
+        case type.SET_NEW_FORMAT_FILM:
+            return state.map((film) => {
+                const { id, format } = action.payload
+                if (film.get('_id') !== id) {
+                    return film
+                } else {
+                    return film.set('newReleaseYear', format)
+                }
+            })
+        case type.SET_NEW_STARS_FILM:
+            return state.map((film) => {
+                const { id, stars } = action.payload
+                if (film.get('_id') !== id) {
+                    return film
+                } else {
+                    return film.set('newReleaseYear', stars)
+                }
+            })
 
         case type.UPDATE_FILM:
             return state.map((film) =>

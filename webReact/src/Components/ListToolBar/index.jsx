@@ -12,6 +12,7 @@ import { Button, Tooltip, Popconfirm, Icon } from 'antd'
 export default class ListToolBar extends React.PureComponent {
     static propTypes = {
         itemName: string,
+        itemNewName: string,
         isEditMode: bool.isRequired,
         isValidChange: bool.isRequired,
         setEditMode: func,
@@ -21,6 +22,7 @@ export default class ListToolBar extends React.PureComponent {
     }
     static defaultProps = {
         itemName: '',
+        itemNewName: '',
         isEditMode: false,
         isValidChange: false,
         setEditMode: void 0,
@@ -38,13 +40,13 @@ export default class ListToolBar extends React.PureComponent {
             saveChangeItem,
             isValidChange,
             itemName,
+            itemNewName,
         } = this.props
-        const _itemName = itemName ? itemName : ''
         const ViewPanel = (
             <div className={Styles.listToolBar}>
                 {setEditMode ? (
                     <Tooltip
-                        title={`edit ${_itemName}`}
+                        title={`Edit ${itemName}`}
                         className={cx(Styles.toolbarButton, Styles.edit)}
                     >
                         <Button icon="edit" onClick={setEditMode} />
@@ -52,7 +54,7 @@ export default class ListToolBar extends React.PureComponent {
                 ) : null}
                 {deleteItem ? (
                     <Popconfirm
-                        title={`Do you want to remove the ${_itemName}?`}
+                        title={`Do you want to remove the ${itemName}?`}
                         onConfirm={deleteItem}
                         okText="Yes"
                         cancelText="No"
@@ -60,7 +62,7 @@ export default class ListToolBar extends React.PureComponent {
                         placement="bottom"
                     >
                         <Tooltip
-                            title={`delete ${_itemName}`}
+                            title={`Delete ${itemName}`}
                             className={cx(Styles.toolbarButton, Styles.danger)}
                         >
                             <Button icon="delete" />
@@ -74,7 +76,11 @@ export default class ListToolBar extends React.PureComponent {
             <div className={Styles.listToolBar}>
                 {saveChangeItem ? (
                     <Tooltip
-                        title={isValidChange ? 'save editable' : 'check Error!'}
+                        title={
+                            isValidChange
+                                ? `Save editable ${itemNewName}`
+                                : `Can't save, title value is empty!`
+                        }
                         className={cx(Styles.toolbarButton, Styles.ok)}
                     >
                         <Button icon="check" onClick={saveChangeItem} disabled={!isValidChange} />
@@ -82,7 +88,7 @@ export default class ListToolBar extends React.PureComponent {
                 ) : null}
                 {setViewMode ? (
                     <Tooltip
-                        title="undo editable"
+                        title={`Undo editable ${itemName}`}
                         className={cx(Styles.toolbarButton, Styles.danger)}
                     >
                         <Button icon="undo" onClick={setViewMode} />

@@ -6,6 +6,8 @@ import FilmCards from './FilmCards'
 import FilmTable from './FilmTable'
 import LightSearchText from './LightSearchText'
 import ListToolBar from './ListToolBar'
+import FilmInputTitle from './Forms/FilmInputTitle'
+import FilmInputYear from './Forms/FilmInputYear'
 
 export {
     LineSpinner,
@@ -16,4 +18,6 @@ export {
     LightSearchText,
     FilmTable,
     ListToolBar,
+    FilmInputTitle,
+    FilmInputYear,
 }

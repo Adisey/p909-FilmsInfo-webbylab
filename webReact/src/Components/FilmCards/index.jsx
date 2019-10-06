@@ -17,7 +17,11 @@ export default function FilmCards(props) {
             </div>
         )
     })
-    return <div className={Styles.main}>{filmsJSX}</div>
+    return (
+        <Catcher>
+            <div className={Styles.main}>{filmsJSX}</div>
+        </Catcher>
+    )
 }
 
 function FilmCard(props) {
