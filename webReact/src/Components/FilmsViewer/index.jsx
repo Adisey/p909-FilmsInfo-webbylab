@@ -11,10 +11,20 @@ import Styles from './styles.less'
 // Actions
 import { uiActions } from '../../bus/ui/actions'
 import { filmsActions } from '../../bus/films/actions'
+import { starsActions } from '../../bus/stars/actions'
+import { formatsActions } from '../../bus/formats/actions'
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({ ...uiActions, ...filmsActions }, dispatch),
+        actions: bindActionCreators(
+            {
+                ...uiActions,
+                ...filmsActions,
+                ...starsActions,
+                ...formatsActions,
+            },
+            dispatch
+        ),
     }
 }
 
@@ -35,10 +45,10 @@ export default connect(
 )(
     class FilmsViewer extends React.PureComponent {
         componentDidMount() {
+            console.log('==(this.props.actions)=>', this.props.actions)
             this.props.actions.fetchFilmsAsync()
-        }
-        aaa = () => {
-            this.props.actions.fetchFilmsAsync()
+            this.props.actions.fetchStarsAsync()
+            this.props.actions.fetchFormatsAsync()
         }
         render() {
             const {

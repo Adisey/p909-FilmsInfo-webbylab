@@ -1,0 +1,1 @@
+export { fetchStars } from './fetchStars'

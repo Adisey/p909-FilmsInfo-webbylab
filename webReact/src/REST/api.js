@@ -37,4 +37,24 @@ export const api = {
             })
         },
     },
+    stars: {
+        fetch() {
+            return fetch(`${MAIN_URL}/stars`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+        },
+    },
+    formats: {
+        fetch() {
+            return fetch(`${MAIN_URL}/formats`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+        },
+    },
 }
