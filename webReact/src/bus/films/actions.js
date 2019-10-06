@@ -29,6 +29,42 @@ export const filmsActions = {
             payload: updatedFilm,
         }
     },
+    setEditModeFilm: (filmId) => {
+        return {
+            type: type.SET_EDIT_MODE_FILM,
+            payload: filmId,
+        }
+    },
+    setViewModeFilm: (filmId) => {
+        return {
+            type: type.SET_VIEW_MODE_FILM,
+            payload: filmId,
+        }
+    },
+    setNewTitleFilm: (id, title) => {
+        return {
+            type: type.SET_NEW_TITLE_FILM,
+            payload: { id, title },
+        }
+    },
+    setNewYearFilm: (id, year) => {
+        return {
+            type: type.SET_NEW_YEAR_FILM,
+            payload: { id, year },
+        }
+    },
+    setNewFormatFilm: (id, format) => {
+        return {
+            type: type.SET_NEW_FORMAT_FILM,
+            payload: { id, format },
+        }
+    },
+    setNewStarsFilm: (id, stars) => {
+        return {
+            type: type.SET_NEW_STARS_FILM,
+            payload: { id, stars },
+        }
+    },
 
     // Async
     fetchFilmsAsync: () => {
