@@ -4,7 +4,14 @@ import { array } from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 // components
-import { LightSearchText, Catcher, ListToolBar, FilmInputTitle, FilmInputYear } from '..'
+import {
+    LightSearchText,
+    Catcher,
+    ListToolBar,
+    FilmInputTitle,
+    FilmInputYear,
+    FilmInputStars,
+} from '..'
 // Styles
 import cx from 'classnames'
 import Styles from './styles.less'
@@ -79,6 +86,9 @@ export default connect(
         setNewYearFilm = (id, year) => {
             this.props.actions.setNewYearFilm(id, year)
         }
+        setNewStarsFilm = (id, stars) => {
+            this.props.actions.setNewStarsFilm(id, stars)
+        }
         render() {
             console.log('==(this.props)=>', this.props)
             const { films, listFilterTitle, listFilterStar, isSpinning } = this.props
@@ -93,6 +103,7 @@ export default connect(
                     releaseYear,
                     newReleaseYear,
                     stars,
+                    newStars,
                 } = film
 
                 const lightTitle = <LightSearchText text={title} searchText={listFilterTitle} />
@@ -115,6 +126,9 @@ export default connect(
                 }
                 const _setNewYearFilm = (value) => {
                     this.setNewYearFilm(_id, value)
+                }
+                const _setNewStarsFilm = (value) => {
+                    this.setNewStarsFilm(_id, value)
                 }
                 const isValidChange = !!newTitle
                 const actions = (
@@ -142,11 +156,13 @@ export default connect(
                     ) : (
                         releaseYear
                     ),
-
-                    // FilmInputYear
-
                     format: format,
-                    stars: lightStars,
+                    // stars: lightStars,
+                    stars: isEditMode ? (
+                        <FilmInputStars value={newStars} changeFunc={_setNewStarsFilm} />
+                    ) : (
+                        lightStars
+                    ),
                     actions: actions,
                 }
             })

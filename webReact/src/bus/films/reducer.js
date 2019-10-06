@@ -68,7 +68,7 @@ export const filmsReducer = (state = initialState, action) => {
                 if (film.get('_id') !== id) {
                     return film
                 } else {
-                    return film.set('newReleaseYear', stars)
+                    return film.set('newStars', stars)
                 }
             })
 
