@@ -29,6 +29,20 @@ router.post(`/`, async (req, res) => {
     }
 })
 
+router.put(`/:id`, async (req, res) => {
+    if (req && req.body) {
+        const response = await FilmsMongoDB.update(req.params.id, req.body)
+        res.status(response.status).json({
+            message: response.message,
+            data: response.data,
+        })
+    } else {
+        res.status(412).json({
+            message: 'Precondition Failed',
+        })
+    }
+})
+
 router.delete(`/:id`, async (req, res) => {
     if (req && req.params && req.params.id) {
         const resDB = await FilmsMongoDB.deleteFilm(req.params.id)

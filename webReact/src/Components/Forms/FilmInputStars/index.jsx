@@ -16,9 +16,9 @@ export default connect(mapStateToProps)(function FilmInputStars(props) {
     const { value, changeFunc, stars } = props
     const valuesArr = value.split(', ')
     const _setNewStarsFilm = (valuesArr) => {
-        console.log('==(value)=>', valuesArr)
+        const newStars = valuesArr.join(', ')
         if (changeFunc) {
-            changeFunc(valuesArr.join(', '))
+            changeFunc(newStars)
         }
     }
     const makeOption = (y) => {
@@ -36,7 +36,7 @@ export default connect(mapStateToProps)(function FilmInputStars(props) {
                 style={{ width: '100%' }}
                 onChange={_setNewStarsFilm}
                 defaultValue={valuesArr}
-                tokenSeparators={[', ']}
+                tokenSeparators={[',']}
             >
                 {optionJSX}
             </Select>

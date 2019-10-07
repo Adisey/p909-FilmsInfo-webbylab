@@ -21,7 +21,7 @@ export const api = {
         },
         update(film) {
             return fetch(`${MAIN_URL}/films/${film._id}`, {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },

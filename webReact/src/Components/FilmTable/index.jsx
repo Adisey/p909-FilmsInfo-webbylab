@@ -93,8 +93,11 @@ export default connect(
         setNewFormatFilm = (id, stars) => {
             this.props.actions.setNewFormatFilm(id, stars)
         }
+        updateFilm = (film) => {
+            this.props.actions.updateFilmAsync(film)
+        }
+        //
         render() {
-            console.log('FilmsTable==(this.props)=>', this.props)
             const { films, listFilterTitle, listFilterStar, isSpinning } = this.props
             const { windowSizeHeight } = this.state
             const data = films.map((film) => {
@@ -123,8 +126,14 @@ export default connect(
                     this.setViewModeFilm(_id)
                 }
                 const _saveChangeItem = () => {
-                    console.log('==(_saveChangeItem)=>', 1111)
-                    // ToDo: Сделать сохранение
+                    const film = {
+                        _id: _id,
+                        title: newTitle,
+                        releaseYear: newReleaseYear,
+                        stars: newStars,
+                        format: newFormat,
+                    }
+                    this.updateFilm(film)
                 }
                 const _setNewTitleFilm = (value) => {
                     this.setNewTitleFilm(_id, value)
@@ -158,13 +167,11 @@ export default connect(
                     ) : (
                         lightTitle
                     ),
-                    // releaseYear: releaseYear,
                     releaseYear: isEditMode ? (
                         <FilmInputYear value={newReleaseYear} changeFunc={_setNewYearFilm} />
                     ) : (
                         releaseYear
                     ),
-                    // format: format,
                     format: isEditMode ? (
                         <FilmInputFormat value={newFormat} changeFunc={_setNewFormatFilm} />
                     ) : (

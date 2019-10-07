@@ -99,8 +99,44 @@ module.exports = filmsMongoDB = {
         }
         return response
     },
+    async update(id, newFilm) {
+        let response = {
+            status: 412,
+            message: 'Precondition Failed',
+        }
+        const filmData = {
+            title: newFilm.title,
+            releaseYear: newFilm.releaseYear,
+            format: newFilm.format,
+            stars: newFilm.stars,
+        }
+        try {
+            const updatedFilm = await Films.findOneAndUpdate(
+                { _id: id },
+                { $set: filmData },
+                { new: true }
+            )
+            response.status = 201
+            response.message = 'Ok'
+            response.data = updatedFilm
+        } catch (error) {
+            response.status = 400
+            response.message = 'Bad Request'
+            response.data = error.errmsg
+        }
+        // Node: В фоне добавим артистов и форматы
+        if (response.status === 201) {
+            if (response.data.format) {
+                formatsMongoDB.load(response.data.format)
+            }
+            const newStar = response.data.stars.split(',')
+            newStar.forEach((star) => {
+                starsMongoDB.load(star.trim())
+            })
+        }
+        return response
+    },
 }
-
 async function updateFilmByTitle(newFilm) {
     const response = {}
     response.status = 400

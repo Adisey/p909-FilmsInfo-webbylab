@@ -45,7 +45,6 @@ export default connect(
 )(
     class FilmsViewer extends React.PureComponent {
         componentDidMount() {
-            console.log('==(this.props.actions)=>', this.props.actions)
             this.props.actions.fetchFilmsAsync()
             this.props.actions.fetchStarsAsync()
             this.props.actions.fetchFormatsAsync()

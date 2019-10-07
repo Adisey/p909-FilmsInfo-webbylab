@@ -23,7 +23,7 @@ export const filmsActions = {
             payload: filmId,
         }
     },
-    updateFilm: (updatedFilm) => {
+    replaceFilm: (updatedFilm) => {
         return {
             type: type.UPDATE_FILM,
             payload: updatedFilm,

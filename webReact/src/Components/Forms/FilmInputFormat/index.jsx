@@ -29,7 +29,7 @@ export default connect(mapStateToProps)(function FilmInputFormat(props) {
     const optionJSX = formats.map((s) => makeOption(s.get('name')))
     return (
         <Catcher>
-            <Select onChange={_setNewFormatFilm} defaultValue={value}>
+            <Select style={{ width: '100%' }} onChange={_setNewFormatFilm} defaultValue={value}>
                 {optionJSX}
             </Select>
         </Catcher>
