@@ -96,6 +96,9 @@ export default connect(
         updateFilm = (film) => {
             this.props.actions.updateFilmAsync(film)
         }
+        createFilm = (film) => {
+            this.props.actions.createFilmAsync(film)
+        }
         //
         render() {
             const { films, listFilterTitle, listFilterStar, isSpinning } = this.props
@@ -104,6 +107,7 @@ export default connect(
                 const {
                     _id,
                     isEditMode,
+                    isNew,
                     title,
                     newTitle,
                     releaseYear,
@@ -135,6 +139,17 @@ export default connect(
                     }
                     this.updateFilm(film)
                 }
+                const _createFilm = () => {
+                    const film = {
+                        id: _id,
+                        title: newTitle,
+                        releaseYear: newReleaseYear,
+                        stars: newStars,
+                        format: newFormat,
+                    }
+                    this.createFilm(film)
+                }
+
                 const _setNewTitleFilm = (value) => {
                     this.setNewTitleFilm(_id, value)
                 }
@@ -157,7 +172,7 @@ export default connect(
                         setViewMode={_setViewModeItem}
                         isEditMode={isEditMode}
                         isValidChange={isValidChange}
-                        saveChangeItem={_saveChangeItem}
+                        saveChangeItem={isNew ? _createFilm : _saveChangeItem}
                     />
                 )
                 return {

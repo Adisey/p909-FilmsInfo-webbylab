@@ -5,12 +5,7 @@ import { takeEvery, all, call } from 'redux-saga/effects'
 import { type } from '../types'
 
 // Workers
-import {
-    fetchFilms,
-    removeFilm,
-    updateFilm,
-    // createFilm,
-} from './workers'
+import { fetchFilms, removeFilm, updateFilm, createFilm } from './workers'
 
 function* watcherFillFilms() {
     yield takeEvery(type.FETCH_FILMS_ASYNC, fetchFilms)
@@ -18,9 +13,9 @@ function* watcherFillFilms() {
 function* watcherUpdateFilm() {
     yield takeEvery(type.UPDATE_FILM_ASYNC, updateFilm)
 }
-// function* watcherCrateFilm() {
-//     yield takeEvery(type.CREATE_FILM_ASYNC, createFilm)
-// }
+function* watcherCrateFilm() {
+    yield takeEvery(type.CREATE_FILM_ASYNC, createFilm)
+}
 function* watcherRemoveFilm() {
     yield takeEvery(type.REMOVE_FILM_ASYNC, removeFilm)
 }
@@ -29,6 +24,6 @@ export function* watcherFilms() {
         call(watcherFillFilms),
         call(watcherRemoveFilm),
         call(watcherUpdateFilm),
-        // call(watcherCrateFilm),
+        call(watcherCrateFilm),
     ])
 }

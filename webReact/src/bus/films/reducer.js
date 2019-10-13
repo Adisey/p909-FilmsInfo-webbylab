@@ -1,5 +1,6 @@
 //Core
 import { fromJS, List } from 'immutable'
+import { v4 } from 'uuid'
 
 // Instruments
 import { type } from './types'
@@ -11,7 +12,16 @@ export const filmsReducer = (state = initialState, action) => {
         case type.FILL_FILMS:
             return fromJS(action.payload)
         case type.CREATE_FILM:
-            return state.unshift(fromJS(action.payload))
+            const newFilm = {
+                _id: v4(),
+                isEditMode: true,
+                isNew: true,
+                newTitle: '',
+                newFormat: '',
+                newReleaseYear: '',
+                newStars: '',
+            }
+            return state.unshift(fromJS(newFilm))
         case type.REMOVE_FILM:
             return state.filter((film) => film.get('_id') !== action.payload)
         case type.SET_EDIT_MODE_FILM:
@@ -75,6 +85,10 @@ export const filmsReducer = (state = initialState, action) => {
         case type.UPDATE_FILM:
             return state.map((film) =>
                 film.get('_id') !== action.payload._id ? film : fromJS(action.payload)
+            )
+        case type.UPDATE_NEW_FILM:
+            return state.map((film) =>
+                film.get('_id') !== action.payload.oldId ? film : fromJS(action.payload)
             )
         default:
             return state

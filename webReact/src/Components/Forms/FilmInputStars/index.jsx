@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps)(function FilmInputStars(props) {
     const { value, changeFunc, stars } = props
-    const valuesArr = value.split(', ')
+    const valuesArr = value ? value.split(', ') : []
     const _setNewStarsFilm = (valuesArr) => {
         const newStars = valuesArr.join(', ')
         if (changeFunc) {

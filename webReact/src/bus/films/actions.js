@@ -11,10 +11,9 @@ export const filmsActions = {
             payload: films,
         }
     },
-    createFilm: (film) => {
+    createFilm: () => {
         return {
             type: type.CREATE_FILM,
-            payload: film,
         }
     },
     removeFilm: (filmId) => {
@@ -26,6 +25,12 @@ export const filmsActions = {
     replaceFilm: (updatedFilm) => {
         return {
             type: type.UPDATE_FILM,
+            payload: updatedFilm,
+        }
+    },
+    replaceNewFilm: (updatedFilm) => {
+        return {
+            type: type.UPDATE_NEW_FILM,
             payload: updatedFilm,
         }
     },
@@ -72,10 +77,10 @@ export const filmsActions = {
             type: type.FETCH_FILMS_ASYNC,
         }
     },
-    createFilmAsync: (comment) => {
+    createFilmAsync: (film) => {
         return {
             type: type.CREATE_FILM_ASYNC,
-            payload: comment,
+            payload: film,
         }
     },
     removeFilmAsync: (filmId) => {

@@ -6,7 +6,7 @@ module.exports = Response = class {
     }
     status(newStatus) {
         if (newStatus) {
-            this._status = isNaN(parseInt(newStatus)) ? parseInt(newStatus) : this._status
+            this._status = isNaN(parseInt(newStatus)) ? this._status : parseInt(newStatus)
             return this
         } else {
             return this._status

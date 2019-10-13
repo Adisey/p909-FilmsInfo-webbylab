@@ -9,12 +9,13 @@ import { Button, Input, Radio, Icon } from 'antd'
 import Styles from './styles.less'
 // Actions
 import { uiActions } from '../../bus/ui/actions'
+import { filmsActions } from '../../bus/films/actions'
 
 const ButtonGroup = Button.Group
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({ ...uiActions }, dispatch),
+        actions: bindActionCreators({ ...uiActions, ...filmsActions }, dispatch),
     }
 }
 
@@ -48,6 +49,9 @@ export default connect(
         onClickDescending = () => {
             this.props.actions.setListSortOrder(this.props.listSortOrder !== 'des' ? 'des' : void 0)
         }
+        createFilm = () => {
+            this.props.actions.createFilm()
+        }
         render() {
             const {
                 isSpinning,
@@ -59,7 +63,14 @@ export default connect(
             return (
                 <div className={Styles.main}>
                     <div className={Styles.buttonPlace} title="Add new film">
-                        <Button type="primary" shape="circle" icon="plus" loading={isSpinning} />
+                        <Button
+                            type="primary"
+                            shape="circle"
+                            icon="plus"
+                            loading={isSpinning}
+                            onClick={this.createFilm}
+                        />
+                        {/* createFilm */}
                     </div>
 
                     <div className={Styles.searchPlace3}>
