@@ -1,46 +1,46 @@
 const Films = require(`../models/films`)
 const starsMongoDB = require(`../middleware/stars`)
 const formatsMongoDB = require(`../middleware/formats`)
+const Response = require(`../helpers/response`)
 
 module.exports = filmsMongoDB = {
     async getAll() {
-        const response = {
-            status: 500,
-            message: 'Internal Server Error',
-        }
+        const response = new Response()
         try {
             const films = await Films.find({})
-            response.status = 200
-            response.message = 'Ok'
-            response.data = films
+            response
+                .status(200)
+                .message('Ok')
+                .data(films)
         } catch (error) {
-            response.status = 400
-            response.message = 'Bad Request'
+            response
+                .status(400)
+                .message('Bad Request')
+                .data(error)
         }
-        return response
+        return response.result
     },
     async deleteFilm(id) {
-        const response = {
-            status: 412,
-            message: 'Precondition Failed',
-        }
+        const response = new Response(412, 'Precondition Failed')
         try {
             const resDB = await Films.deleteOne({ _id: id })
-            response.status = 204
-            response.message = resDB.deletedCount
-                ? `record with id ${id} is delete`
-                : `record with id ${id} is not Found`
+            response
+                .status(204)
+                .message(
+                    resDB.deletedCount
+                        ? `record with id ${id} is delete`
+                        : `record with id ${id} is not Found`
+                )
         } catch (error) {
-            response.status = 400
-            response.message = 'Bad Request'
+            response
+                .status(400)
+                .message('Bad Request')
+                .data(error)
         }
-        return response
+        return response.result
     },
     async add(newFilm) {
-        const response = {
-            status: 412,
-            message: 'Precondition Failed',
-        }
+        const response = new Response(412, 'Precondition Failed')
         const filmData = {
             title: newFilm.title,
             releaseYear: newFilm.releaseYear,
@@ -50,21 +50,20 @@ module.exports = filmsMongoDB = {
         const film = new Films(filmData)
         try {
             await film.save()
-            response.status = 201
-            response.message = 'Ok'
-            response.data = film
+            response
+                .status(201)
+                .message('Ok')
+                .data(film)
         } catch (error) {
-            response.status = 400
-            response.message = 'Duplicate name'
-            response.data = findError
+            response
+                .status(400)
+                .message('Duplicate name')
+                .data(findError)
         }
-        return response
+        return response.result
     },
     async load(newFilm) {
-        let response = {
-            status: 412,
-            message: 'Precondition Failed',
-        }
+        const response = new Response(412, 'Precondition Failed')
         const filmData = {
             title: newFilm.title,
             releaseYear: newFilm.releaseYear,
@@ -74,17 +73,22 @@ module.exports = filmsMongoDB = {
         const film = new Films(filmData)
         try {
             await film.save()
-            response.status = 201
-            response.message = 'Ok'
-            response.data = film
+            response
+                .status(201)
+                .message('Ok')
+                .data(film)
         } catch (error) {
             if (error.code === 11000) {
                 const myResponse = await updateFilmByTitle(newFilm)
-                response = Object.assign({}, myResponse)
+                response
+                    .status(myResponse.status)
+                    .message(myResponse.message)
+                    .data(myResponse.data)
             } else {
-                response.status = 400
-                response.message = 'Bad Request'
-                response.data = error.errmsg
+                response
+                    .status(400)
+                    .message('Bad Request')
+                    .data(error.errmsg)
             }
         }
         // Node: В фоне добавим артистов и форматы
@@ -97,13 +101,10 @@ module.exports = filmsMongoDB = {
                 starsMongoDB.load(star.trim())
             })
         }
-        return response
+        return response.result
     },
     async update(id, newFilm) {
-        let response = {
-            status: 412,
-            message: 'Precondition Failed',
-        }
+        const response = new Response(412, 'Precondition Failed')
         const filmData = {
             title: newFilm.title,
             releaseYear: newFilm.releaseYear,
@@ -116,13 +117,15 @@ module.exports = filmsMongoDB = {
                 { $set: filmData },
                 { new: true }
             )
-            response.status = 201
-            response.message = 'Ok'
-            response.data = updatedFilm
+            response
+                .status(201)
+                .message('Ok')
+                .data(updatedFilm)
         } catch (error) {
-            response.status = 400
-            response.message = 'Bad Request'
-            response.data = error.errmsg
+            response
+                .status(400)
+                .message('Bad Request')
+                .data(error.errmsg)
         }
         // Node: В фоне добавим артистов и форматы
         if (response.status === 201) {
@@ -134,24 +137,23 @@ module.exports = filmsMongoDB = {
                 starsMongoDB.load(star.trim())
             })
         }
-        return response
+        return response.result
     },
 }
 async function updateFilmByTitle(newFilm) {
-    const response = {}
-    response.status = 400
-    response.message = 'Error Updating Films'
+    const response = new Response(400, 'Error Updating Films')
     try {
         const updatedFilm = await Films.findOneAndUpdate(
             { title: newFilm.title },
             { $set: newFilm },
             { new: true }
         )
-        response.status = 201
-        response.message = 'Duplicate name'
-        response.data = updatedFilm
+        response
+            .status(201)
+            .message('Ok')
+            .data(updatedFilm)
     } catch (error) {
-        response.data = error
+        response.data(error)
     }
-    return response
+    return response.result
 }
