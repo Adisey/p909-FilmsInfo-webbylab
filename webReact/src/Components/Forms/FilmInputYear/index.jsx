@@ -31,7 +31,7 @@ export default function FilmInputYear(props) {
                 showSearch
                 placeholder="Year"
                 defaultValue={value}
-                style={{ width: 75 }}
+                style={{ width: '100%' }}
                 optionFilterProp="children"
                 onChange={_setNewYearFilm}
                 filterOption={(input, option) =>

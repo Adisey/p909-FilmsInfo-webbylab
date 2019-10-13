@@ -6,7 +6,7 @@ import { type } from './types'
 const initialState = fromJS({
     isSpinning: false,
     spinners: [],
-    listViewMode: 'table',
+    listViewMode: 'card',
     listSortOrder: void 0,
     listFilterTitle: '',
     listFilterStar: '',

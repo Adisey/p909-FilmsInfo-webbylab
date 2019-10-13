@@ -95,11 +95,7 @@ export default connect(
                                         listFilterStar={listFilterStar}
                                     />
                                 ) : (
-                                    <FilmCards
-                                        films={filmsJS}
-                                        listFilterTitle={listFilterTitle}
-                                        listFilterStar={listFilterStar}
-                                    />
+                                    <FilmCards films={filmsJS} />
                                 )}
                             </div>
                         </Spin>
