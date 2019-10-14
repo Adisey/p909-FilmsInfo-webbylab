@@ -5,6 +5,7 @@ const path = require('path')
 const starsRouter = require(`./routes/stars`)
 const formatsRouter = require(`./routes/formats`)
 const filmsRouter = require(`./routes/films`)
+const fileRouter = require(`./routes/file`)
 const keys = require('./key')
 var cors = require('cors')
 
@@ -28,6 +29,7 @@ app.use(bodyParser.json())
 app.use(`/api/stars`, starsRouter)
 app.use(`/api/formats`, formatsRouter)
 app.use(`/api/films`, filmsRouter)
+app.use(`/api/uploadfile`, fileRouter)
 app.use(express.static(clientPath))
 
 app.listen(port, () => {

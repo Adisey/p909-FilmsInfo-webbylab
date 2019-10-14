@@ -2,10 +2,13 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+// components
+import { Catcher, UploadFile } from '..'
+
 // AntD
 import { Button, Input, Radio, Icon } from 'antd'
 // Styles
-// import cx from 'classnames'
+import cx from 'classnames'
 import Styles from './styles.less'
 // Actions
 import { uiActions } from '../../bus/ui/actions'
@@ -61,73 +64,78 @@ export default connect(
                 listFilterStar,
             } = this.props
             return (
-                <div className={Styles.main}>
-                    <div className={Styles.buttonPlace} title="Add new film">
-                        <Button
-                            type="primary"
-                            shape="circle"
-                            icon="plus"
-                            loading={isSpinning}
-                            onClick={this.createFilm}
-                        />
-                        {/* createFilm */}
-                    </div>
+                <Catcher>
+                    <div className={Styles.main}>
+                        <div className={Styles.buttonPlace} title="Add new film">
+                            <Button
+                                type="primary"
+                                shape="circle"
+                                icon="plus"
+                                loading={isSpinning}
+                                onClick={this.createFilm}
+                            />
+                            {/* createFilm */}
+                        </div>
 
-                    <div className={Styles.searchPlace3}>
-                        <Input
-                            placeholder="Film title"
-                            allowClear
-                            value={listFilterTitle}
-                            onChange={this.setFilterTitle}
-                            prefix={
-                                <Icon style={{ color: 'rgba(0,0,0,.25)' }} type="video-camera" />
-                            }
-                            suffix={!listFilterTitle ? <Icon type="search" /> : null}
-                        />
-                    </div>
-                    <div className={Styles.buttonPlace} title="sort by title">
-                        <ButtonGroup>
-                            <Button
-                                type={listSortOrder === 'asc' ? 'primary' : 'default'}
-                                icon="sort-ascending"
-                                onClick={this.onClickAscending}
+                        <div className={Styles.searchPlace3}>
+                            <Input
+                                placeholder="Film title"
+                                allowClear
+                                value={listFilterTitle}
+                                onChange={this.setFilterTitle}
+                                prefix={
+                                    <Icon
+                                        style={{ color: 'rgba(0,0,0,.25)' }}
+                                        type="video-camera"
+                                    />
+                                }
+                                suffix={!listFilterTitle ? <Icon type="search" /> : null}
                             />
-                            <Button
-                                type={listSortOrder === 'des' ? 'primary' : 'default'}
-                                icon="sort-descending"
-                                onClick={this.onClickDescending}
+                        </div>
+                        <div className={Styles.buttonPlace} title="sort by title">
+                            <ButtonGroup>
+                                <Button
+                                    type={listSortOrder === 'asc' ? 'primary' : 'default'}
+                                    icon="sort-ascending"
+                                    onClick={this.onClickAscending}
+                                />
+                                <Button
+                                    type={listSortOrder === 'des' ? 'primary' : 'default'}
+                                    icon="sort-descending"
+                                    onClick={this.onClickDescending}
+                                />
+                            </ButtonGroup>
+                        </div>
+                        <div className={Styles.searchPlace2}>
+                            <Input
+                                placeholder="Star"
+                                allowClear
+                                value={listFilterStar}
+                                onChange={this.setFilterStar}
+                                prefix={<Icon style={{ color: 'rgba(0,0,0,.25)' }} type="user" />}
+                                suffix={!listFilterStar ? <Icon type="search" /> : null}
                             />
-                        </ButtonGroup>
+                        </div>
+                        <div className={Styles.buttonPlace} title={'change show mode'}>
+                            <Radio.Group
+                                onChange={this.setViewMode}
+                                value={listViewMode}
+                                buttonStyle="solid"
+                            >
+                                <Radio.Button value="card">
+                                    <Icon type="appstore" />
+                                </Radio.Button>
+                                <Radio.Button value="table">
+                                    <Icon type="table" />
+                                </Radio.Button>
+                            </Radio.Group>
+                        </div>
+                        <div className={Styles.spacePlace} />
+                        <div className={cx(Styles.buttonPlace, Styles.rightSpace)}>
+                            <UploadFile />
+                        </div>
                     </div>
-                    <div className={Styles.searchPlace2}>
-                        <Input
-                            placeholder="Star"
-                            allowClear
-                            value={listFilterStar}
-                            onChange={this.setFilterStar}
-                            prefix={<Icon style={{ color: 'rgba(0,0,0,.25)' }} type="user" />}
-                            suffix={!listFilterStar ? <Icon type="search" /> : null}
-                        />
-                    </div>
-                    <div className={Styles.buttonPlace} title={'change show mode'}>
-                        <Radio.Group
-                            onChange={this.setViewMode}
-                            value={listViewMode}
-                            buttonStyle="solid"
-                        >
-                            <Radio.Button value="card">
-                                <Icon type="appstore" />
-                            </Radio.Button>
-                            <Radio.Button value="table">
-                                <Icon type="table" />
-                            </Radio.Button>
-                        </Radio.Group>
-                    </div>
-                    <div className={Styles.spacePlace} />
-                    <div className={Styles.buttonPlace} title={'Download'}>
-                        <Button icon="download" type="danger" loading={isSpinning} />
-                    </div>
-                </div>
+                </Catcher>
             )
         }
     }

@@ -57,4 +57,15 @@ export const api = {
             })
         },
     },
+    file: {
+        upload(file) {
+            return fetch(`${MAIN_URL}/uploadfile`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: file }),
+            })
+        },
+    },
 }

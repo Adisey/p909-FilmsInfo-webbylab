@@ -12,6 +12,7 @@ import LightSearchText from './LightSearchText'
 import LineSpinner from './LineSpinner'
 import ListToolBar from './ListToolBar'
 import ToolBar from './ToolBar'
+import UploadFile from './UploadFile'
 
 export {
     Catcher,
@@ -28,4 +29,5 @@ export {
     LineSpinner,
     ListToolBar,
     ToolBar,
+    UploadFile,
 }

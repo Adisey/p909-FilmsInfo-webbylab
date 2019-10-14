@@ -1,6 +1,6 @@
 const Films = require(`../models/films`)
-const starsMongoDB = require(`../middleware/stars`)
-const formatsMongoDB = require(`../middleware/formats`)
+const starsMongoDB = require(`./stars`)
+const formatsMongoDB = require(`./formats`)
 const Response = require(`../helpers/response`)
 
 module.exports = filmsMongoDB = {

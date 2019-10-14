@@ -95,4 +95,10 @@ export const filmsActions = {
             payload: updatedFilm,
         }
     },
+    uploadFileAsync: (file) => {
+        return {
+            type: type.UPLOAD_FILE_ASYNC,
+            payload: file,
+        }
+    },
 }

@@ -10,11 +10,11 @@ const filmsSchema = new Schema({
     },
     releaseYear: {
         type: String,
-        required: true,
+        // required: true,
     },
     format: {
         type: String,
-        required: true,
+        // required: true,
     },
     stars: {
         // ToDo: Подумать, тут вероятнее всего будет удобнее массив
