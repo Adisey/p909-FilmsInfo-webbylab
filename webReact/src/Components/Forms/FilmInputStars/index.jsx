@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 // Components
-import { Catcher } from '../..'
+import { Catcher, instruments } from '../..'
 // Antd
 import { Select } from 'antd'
 const { Option } = Select
@@ -16,7 +16,7 @@ export default connect(mapStateToProps)(function FilmInputStars(props) {
     const { value, changeFunc, stars } = props
     const valuesArr = value ? value.split(', ') : []
     const _setNewStarsFilm = (valuesArr) => {
-        const newStars = valuesArr.join(', ')
+        const newStars = instruments.uniqueItemsInArr(valuesArr).join(', ')
         if (changeFunc) {
             changeFunc(newStars)
         }

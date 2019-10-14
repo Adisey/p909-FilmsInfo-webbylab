@@ -1,27 +1,31 @@
+import * as instruments from '../instruments'
 import Catcher from './Catcher'
-import ToolBar from './ToolBar'
-import LineSpinner from './LineSpinner'
-import FilmsViewer from './FilmsViewer'
 import FilmCards from './FilmCards'
-import FilmTable from './FilmTable'
-import LightSearchText from './LightSearchText'
-import ListToolBar from './ListToolBar'
+import FilmCardView from './FilmCardView'
+import FilmInputFormat from './Forms/FilmInputFormat'
+import FilmInputStars from './Forms/FilmInputStars'
 import FilmInputTitle from './Forms/FilmInputTitle'
 import FilmInputYear from './Forms/FilmInputYear'
-import FilmInputStars from './Forms/FilmInputStars'
-import FilmInputFormat from './Forms/FilmInputFormat'
+import FilmsViewer from './FilmsViewer'
+import FilmTable from './FilmTable'
+import LightSearchText from './LightSearchText'
+import LineSpinner from './LineSpinner'
+import ListToolBar from './ListToolBar'
+import ToolBar from './ToolBar'
 
 export {
-    LineSpinner,
     Catcher,
-    ToolBar,
-    FilmsViewer,
     FilmCards,
-    LightSearchText,
-    FilmTable,
-    ListToolBar,
+    FilmCardView,
+    FilmInputFormat,
+    FilmInputStars,
     FilmInputTitle,
     FilmInputYear,
-    FilmInputStars,
-    FilmInputFormat,
+    FilmsViewer,
+    FilmTable,
+    instruments,
+    LightSearchText,
+    LineSpinner,
+    ListToolBar,
+    ToolBar,
 }

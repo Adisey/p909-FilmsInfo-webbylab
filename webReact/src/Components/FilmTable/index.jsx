@@ -59,11 +59,11 @@ export default connect(
             }
             this.updateSize = this.updateSize.bind(this)
         }
-        componentDidMount() {
+        UNSAFE_componentDidMount() {
             this.updateSize()
             window.addEventListener('resize', this.updateSize)
         }
-        componentWillUnmount() {
+        UNSAFE_componentWillUnmount() {
             window.removeEventListener('resize', this.updateSize)
         }
         updateSize() {

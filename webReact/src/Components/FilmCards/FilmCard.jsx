@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { object } from 'prop-types'
 
 import {
     LightSearchText,
@@ -10,10 +11,14 @@ import {
     FilmInputYear,
     FilmInputStars,
     FilmInputFormat,
+    FilmCardView,
 } from '..'
 // Styles
 import cx from 'classnames'
 import Styles from './styles.less'
+// Antd
+import { Modal, Button } from 'antd'
+
 // Actions
 import { filmsActions } from '../../bus/films/actions'
 
@@ -41,8 +46,14 @@ export default connect(
     mapDispatchToProps
 )(
     class FilmCard extends React.Component {
+        static propTypes = {
+            film: object.isRequired,
+        }
+
+        state = { isModalView: false }
         render() {
             const { film, listFilterTitle, listFilterStar } = this.props
+            const { isModalView } = this.state
             const lightTitle = <LightSearchText text={film.title} searchText={listFilterTitle} />
             const lightStars = <LightSearchText text={film.stars} searchText={listFilterStar} />
             const _deleteItem = () => {
@@ -88,17 +99,26 @@ export default connect(
                 this.props.actions.setNewFormatFilm(film._id, value)
             }
             const isValidChange = !!film.newTitle
-
+            const showModal = () => {
+                this.setState({
+                    isModalView: true,
+                })
+            }
+            const hideModal = () => {
+                this.setState({
+                    isModalView: false,
+                })
+            }
             return (
                 <Catcher>
                     <div className={cx(Styles.titleFilms)}>
                         {film.isEditMode ? (
                             <FilmInputTitle value={film.newTitle} changeFunc={_setNewTitleFilm} />
                         ) : (
-                            lightTitle
+                            <div onClick={showModal}>{lightTitle}</div>
                         )}
                     </div>
-                    <div className={cx(Styles.format, Styles.field)}>
+                    <div className={cx(Styles.field)}>
                         <div className={Styles.title}>Year:</div>
                         <div className={cx(film.isEditMode ? Styles.editContent : Styles.content)}>
                             {film.isEditMode ? (
@@ -151,6 +171,18 @@ export default connect(
                             saveChangeItem={film.isNew ? _createFilm : _saveChangeItem}
                         />
                     </div>
+                    <Modal
+                        title={film.title}
+                        visible={isModalView}
+                        onCancel={hideModal}
+                        footer={[
+                            <Button key={film.title} onClick={hideModal}>
+                                Close
+                            </Button>,
+                        ]}
+                    >
+                        <FilmCardView film={film} />
+                    </Modal>
                 </Catcher>
             )
         }

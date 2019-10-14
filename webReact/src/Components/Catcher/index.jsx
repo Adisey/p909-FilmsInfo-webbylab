@@ -9,7 +9,7 @@ export default class Catcher extends Component {
         error: false,
     }
 
-    componentDidCatch(error, stack) {
+    UNSAFE_componentDidCatch(error, stack) {
         console.log('ERROR:', error.message)
         console.log('STACKTRACE:', stack.componentStack)
 
