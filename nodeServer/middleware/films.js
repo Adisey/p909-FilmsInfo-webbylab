@@ -92,12 +92,13 @@ module.exports = filmsMongoDB = {
             }
         }
         // Node: В фоне добавим артистов и форматы
-        if (response.status === 201) {
+        if (response.status() === 201) {
             if (newFilm.format) {
                 formatsMongoDB.load(newFilm.format)
             }
-            const newStar = response.data.stars.split(',')
-            newStar.forEach((star) => {
+            const newStar = response.data().stars
+            const newStarArr = newStar ? newStar.split(',') : []
+            newStarArr.forEach((star) => {
                 starsMongoDB.load(star.trim())
             })
         }
@@ -128,12 +129,13 @@ module.exports = filmsMongoDB = {
                 .data(error.errmsg)
         }
         // Node: В фоне добавим артистов и форматы
-        if (response.status === 201) {
-            if (response.data.format) {
-                formatsMongoDB.load(response.data.format)
+        if (response.status() === 201) {
+            if (response.data().format) {
+                formatsMongoDB.load(response.data().format)
             }
-            const newStar = response.data.stars.split(',')
-            newStar.forEach((star) => {
+            const newStar = response.data().stars
+            const newStarArr = newStar ? newStar.split(',') : []
+            newStarArr.forEach((star) => {
                 starsMongoDB.load(star.trim())
             })
         }

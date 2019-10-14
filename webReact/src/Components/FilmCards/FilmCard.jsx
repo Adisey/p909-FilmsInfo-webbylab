@@ -43,7 +43,6 @@ export default connect(
     class FilmCard extends React.Component {
         render() {
             const { film, listFilterTitle, listFilterStar } = this.props
-            console.log('==(props)=>', this.props)
             const lightTitle = <LightSearchText text={film.title} searchText={listFilterTitle} />
             const lightStars = <LightSearchText text={film.stars} searchText={listFilterStar} />
             const _deleteItem = () => {

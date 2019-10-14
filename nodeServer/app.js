@@ -17,6 +17,7 @@ mongoose
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
+        useFindAndModify: false,
     })
     .then(() => console.log(`Was connected to MongoDB`))
     .catch((err) => console.error(err))
@@ -30,7 +31,7 @@ app.use(`/api/films`, filmsRouter)
 app.use(express.static(clientPath))
 
 app.listen(port, () => {
-    console.log()
+    console.log('-------------------------------------------------')
     console.log(`API Server is started ${new Date().toISOString()}`)
     console.log(`Connect to "//${host}:${port}`)
     console.log('Stop Server - "Crtl+C"')
