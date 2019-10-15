@@ -1,6 +1,6 @@
 ## Веб-приложение для хранения информации о фильмах.
 
-![внешний вид](https://github.com/Adisey/p909-FilmsInfo-webbylab/blob/master/Docs/cards.png)
+![внешний вид](https://github.com/Adisey/p909-FilmsInfo-webbylab/blob/master/Docs/cards.png?raw=true)
 
 ### Функции, поддерживающие системой:
 
@@ -19,7 +19,7 @@
    Для запуска сервера в директории _nodeServer_ выполнить _**npm start**_
    Сервер отдаёт API на 5000 порту
 
-![API](https://github.com/Adisey/p909-FilmsInfo-webbylab/blob/master/Docs/API.png)
+![API](https://github.com/Adisey/p909-FilmsInfo-webbylab/blob/master/Docs/API.png?raw=true)
 
 2. Облачный MongoDB на [mlab.com](https://mlab.com)
    Запускать не нужно, она работает. :) Ключи от неё не прятал, секретной инфы там нет.
