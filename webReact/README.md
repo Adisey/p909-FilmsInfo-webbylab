@@ -19,7 +19,7 @@
    Для запуска сервера в директории _nodeServer_ выполнить _**npm start**_
    Сервер отдаёт API на 5000 порту
 
-[API](/Docs/API.png?raw=true 'Optional Title')
+![API](https://raw.githubusercontent.com/Adisey/p909-FilmsInfo-webbylab/master/Docs/API.png)
 
 2. Облачный MongoDB на [mlab.com](https://mlab.com)
    Запускать не нужно, она работает. :) Ключи от неё не прятал, секретной инфы там нет.
